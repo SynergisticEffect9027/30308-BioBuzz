@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="topTest", group="test")
-public class test extends LinearOpMode {
+public class top extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor intakeMotor = null;
     private DcMotorEx lancherMotor;
