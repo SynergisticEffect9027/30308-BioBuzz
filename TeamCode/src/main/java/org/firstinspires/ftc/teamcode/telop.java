@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.comp.driveTrain;
 import org.firstinspires.ftc.teamcode.comp.topBot;
 
+
+@TeleOp(name="test", group="test")
 public class telop extends OpMode {
 
     double foward, strafe, rotate;
