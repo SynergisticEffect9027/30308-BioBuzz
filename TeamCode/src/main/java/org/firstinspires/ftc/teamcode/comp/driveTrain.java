@@ -12,10 +12,10 @@ public class driveTrain {
         frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
         backRightDrive = hwMap.get(DcMotor.class, "backRightDrive");
 
+        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void drive(double foward, double strafe, double rotate){
