@@ -38,9 +38,11 @@ public class topBot {
     }
     public Command launch(){
         time.reset();
-        while (time.seconds() < 5){
+        while (time.seconds() < 6){
             startLaunch();
             if (time.seconds() > 3){
+            }
+            if (time.seconds() > 5){
                 stopLaunch();
             }
         }
