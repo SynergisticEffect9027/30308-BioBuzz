@@ -28,7 +28,7 @@ public class telop extends OpMode {
         drive.drive(foward,strafe,rotate);
 
         if(gamepad2.a){
-            top.launch();
+            top.startLaunch();
         }
         if (gamepad2.b){
             top.stopLaunch();
