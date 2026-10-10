@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.subClasses.driveTrain;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
 
-@TeleOp(name="test", group="test")
+@TeleOp(name="telop")
 public class telop extends OpMode {
 
     double foward, strafe, rotate;
