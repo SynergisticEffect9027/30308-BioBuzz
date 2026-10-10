@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.pedro.avaAutos;
+package org.firstinspires.ftc.teamcode.avaAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.pedro.topBot;
+import org.firstinspires.ftc.teamcode.subClasses.Constants;
+import org.firstinspires.ftc.teamcode.subClasses.topBot;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import static com.pedropathing.api.Paths.*;
