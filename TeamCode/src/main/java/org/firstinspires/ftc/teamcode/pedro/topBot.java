@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.pedro;
 
+import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import java.util.concurrent.TimeUnit;
 
 public class topBot {
     public DcMotor  intakeMotor;
@@ -34,9 +33,9 @@ public class topBot {
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
-    public void launch(int x) throws InterruptedException {
+    public Command launch(){
         startLaunch();
-        TimeUnit.SECONDS.sleep(x);
         stopLaunch();
+        return null;
     }
 }

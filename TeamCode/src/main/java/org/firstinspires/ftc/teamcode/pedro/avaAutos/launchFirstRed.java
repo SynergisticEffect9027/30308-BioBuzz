@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.pedro.topBot;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import static com.pedropathing.api.Paths.*;
@@ -20,6 +21,8 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
+
+    topBot top = new topBot();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
@@ -38,6 +41,7 @@ public class launchFirstRed extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower, launchPath()),
+                top.launch(),
                 // Add mechanism commands here.
                 follow(follower, parkPath())
         );
@@ -47,9 +51,9 @@ public class launchFirstRed extends OpMode {
     public void init() {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
+        top.init(hardwareMap);
         follower.setPose(startPose);
         follower.update();
-
     }
 
     @Override
