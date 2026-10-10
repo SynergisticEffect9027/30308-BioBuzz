@@ -4,8 +4,11 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class topBot {
+
+    private ElapsedTime time = new ElapsedTime();
     public DcMotor  intakeMotor;
     public DcMotorEx lancherMotor;
     public void init(HardwareMap hwMap) {
@@ -34,8 +37,13 @@ public class topBot {
         intakeMotor.setPower(0);
     }
     public Command launch(){
-        startLaunch();
-        stopLaunch();
+        time.reset();
+        while (time.seconds() < 5){
+            startLaunch();
+            if (time.seconds() > 3){
+                stopLaunch();
+            }
+        }
         return null;
     }
 }
