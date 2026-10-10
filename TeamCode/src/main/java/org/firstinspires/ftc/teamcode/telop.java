@@ -34,7 +34,7 @@ public class telop extends OpMode {
             top.stopLaunch();
         }
         if (gamepad2.x){
-            top.intake();
+            top.startIntake();
         }
         if (gamepad2.y){
             top.stopIntake();
