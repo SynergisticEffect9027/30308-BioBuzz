@@ -37,6 +37,7 @@ public class topBot {
         intakeMotor.setPower(0);
     }
     public Command launch(){
+        // untested
         time.reset();
         while (time.seconds() < 6){
             startLaunch();

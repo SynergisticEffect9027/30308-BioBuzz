@@ -41,7 +41,7 @@ public class launchFirstRed extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower, launchPath()),
-                top.launch(),
+                top.launch(),  // untested
                 // Add mechanism commands here.
                 follow(follower, parkPath())
         );
