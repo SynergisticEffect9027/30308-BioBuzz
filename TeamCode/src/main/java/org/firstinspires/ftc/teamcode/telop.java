@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.comp.driveTrain;
-import org.firstinspires.ftc.teamcode.comp.topBot;
+import org.firstinspires.ftc.teamcode.subClasses.driveTrain;
+import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
 
 @TeleOp(name="test", group="test")
