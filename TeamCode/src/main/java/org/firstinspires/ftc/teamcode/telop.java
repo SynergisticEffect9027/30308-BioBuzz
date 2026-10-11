@@ -27,6 +27,7 @@ public class telop extends OpMode {
     public void loop(){
         cam.update();
         cam.display();
+        telemetry.update();
 
         foward = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         strafe =  gamepad1.left_stick_x;
