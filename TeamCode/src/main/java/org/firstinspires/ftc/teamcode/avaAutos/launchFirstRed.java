@@ -16,6 +16,7 @@ import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
+import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 
 @Autonomous
 public class launchFirstRed extends OpMode {
@@ -23,6 +24,8 @@ public class launchFirstRed extends OpMode {
     private Follower follower;
 
     topBot top = new topBot();
+
+    Webcam cam = new Webcam();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
@@ -41,6 +44,7 @@ public class launchFirstRed extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower, launchPath()),
+                Webcam.redCheck(cam),
                 top.launch(),  // untested
                 // Add mechanism commands here.
                 follow(follower, parkPath())

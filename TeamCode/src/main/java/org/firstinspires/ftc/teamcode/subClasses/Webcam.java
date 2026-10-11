@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subClasses;
 
 import android.util.Size;
 
+import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -75,6 +76,23 @@ public class Webcam {
                 telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
             }
         }
+    }
+    public String data(){
+        for (AprilTagDetection detection : detectedTags) {
+            if (detection instanceof AprilTagClusterDetection) {
+                    AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
+                    if (clusterDet != null) {
+                        return clusterDet.metadata.name;
+                    }
+            }
+        }
+        return null;
+        }
+    public static Command redCheck(Webcam webcam){
+        return Command.build()
+                .setExecute(webcam::update)
+                .setDone(() -> webcam.data() != null
+                        && webcam.data().startsWith("red"));
     }
 
     public void stopStreaming(){
