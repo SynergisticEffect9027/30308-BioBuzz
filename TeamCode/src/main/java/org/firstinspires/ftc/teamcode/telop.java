@@ -47,5 +47,10 @@ public class telop extends OpMode {
         if (gamepad2.y){
             top.stopIntake();
         }
+        if (gamepad1.dpad_down) {
+            cam.stopStreaming();
+        } else if (gamepad1.dpad_up) {
+            cam.resumeStreaming();
+        }
     }
 }

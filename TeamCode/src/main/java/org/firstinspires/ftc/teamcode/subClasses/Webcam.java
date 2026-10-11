@@ -76,6 +76,13 @@ public class Webcam {
             }
         }
     }
+
+    public void stopStreaming(){
+        visionPortal.stopStreaming();
+    }
+    public void resumeStreaming(){
+        visionPortal.resumeStreaming();
+    }
     public void stop(){
         if (visionPortal != null){
             visionPortal.close();
