@@ -14,6 +14,8 @@ import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
 import org.firstinspires.ftc.teamcode.subClasses.Webcam;
@@ -22,6 +24,8 @@ import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
+
+    private ElapsedTime time = new ElapsedTime();
 
     topBot top = new topBot();
 
@@ -44,8 +48,8 @@ public class launchFirstRed extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower, launchPath()),
-                Webcam.redCheck(cam),
-                top.launch(),  // untested
+                Webcam.redCheck(cam).until(() -> time.seconds() > 24),
+                top.launch().unless(() -> time.seconds() > 24),  // untested
                 // Add mechanism commands here.
                 follow(follower, parkPath())
         );
@@ -63,7 +67,7 @@ public class launchFirstRed extends OpMode {
     @Override
     public void start() {
         schedule(autoRoutine());
-
+        time.reset();
     }
 
     @Override
