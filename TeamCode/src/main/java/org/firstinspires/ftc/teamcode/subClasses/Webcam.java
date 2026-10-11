@@ -94,6 +94,12 @@ public class Webcam {
                 .setDone(() -> webcam.data() != null
                         && webcam.data().startsWith("red"));
     }
+    public static Command blueCheck(Webcam webcam){
+        return Command.build()
+                .setExecute(webcam::update)
+                .setDone(() -> webcam.data() != null
+                        && webcam.data().startsWith("blue"));
+    }
 
     public void stopStreaming(){
         visionPortal.stopStreaming();
