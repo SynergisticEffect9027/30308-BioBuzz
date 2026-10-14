@@ -78,27 +78,26 @@ public class Webcam {
         }
     }
     public String data(){
-        for (AprilTagDetection detection : detectedTags) {
-            if (detection instanceof AprilTagClusterDetection) {
+            for (AprilTagDetection detection : detectedTags) {
+                if (detection instanceof AprilTagClusterDetection) {
                     AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
-                    if (clusterDet != null) {
+                    if (clusterDet.metadata != null) {
                         return clusterDet.metadata.name;
                     }
+                }
             }
-        }
         return null;
         }
     public static Command redCheck(Webcam webcam){
         return Command.build()
                 .setExecute(webcam::update)
-                .setDone(() -> webcam.data() != null
-                        && webcam.data().startsWith("red"));
+                .setDone(() -> webcam.data() != null  && webcam.data().startsWith("RED"));
     }
     public static Command blueCheck(Webcam webcam){
         return Command.build()
                 .setExecute(webcam::update)
                 .setDone(() -> webcam.data() != null
-                        && webcam.data().startsWith("blue"));
+                        && webcam.data().startsWith("BLUE"));
     }
 
     public void stopStreaming(){

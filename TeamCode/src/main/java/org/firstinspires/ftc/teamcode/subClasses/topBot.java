@@ -47,6 +47,6 @@ public class topBot {
                 stopLaunch();
             }
         }
-        return null;
+        return Command.build();
     }
 }

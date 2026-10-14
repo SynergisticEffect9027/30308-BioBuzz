@@ -13,14 +13,14 @@ public class telop extends OpMode {
 
     double foward, strafe, rotate;
 
-    driveTrain drive = new driveTrain();
-    topBot top = new topBot();
+//    driveTrain drive = new driveTrain();
+//    topBot top = new topBot();
 
     Webcam cam = new Webcam();
     @Override
     public void init(){
-        drive.init(hardwareMap);
-        top.init(hardwareMap);
+//        drive.init(hardwareMap);
+//        top.init(hardwareMap);
         cam.init(hardwareMap, telemetry);
     }
     @Override
@@ -33,20 +33,20 @@ public class telop extends OpMode {
         strafe =  gamepad1.left_stick_x;
         rotate =  gamepad1.right_stick_x;
 
-        drive.drive(foward,strafe,rotate);
-
-        if(gamepad2.a){
-            top.startLaunch();
-        }
-        if (gamepad2.b){
-            top.stopLaunch();
-        }
-        if (gamepad2.x){
-            top.startIntake();
-        }
-        if (gamepad2.y){
-            top.stopIntake();
-        }
+//        drive.drive(foward,strafe,rotate);
+//
+//        if(gamepad2.a){
+//            top.startLaunch();
+//        }
+//        if (gamepad2.b){
+//            top.stopLaunch();
+//        }
+//        if (gamepad2.x){
+//            top.startIntake();
+//        }
+//        if (gamepad2.y){
+//            top.stopIntake();
+//        }
         if (gamepad1.dpad_down) {
             cam.stopStreaming();
         } else if (gamepad1.dpad_up) {

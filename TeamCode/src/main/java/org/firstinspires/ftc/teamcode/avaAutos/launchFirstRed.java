@@ -47,11 +47,11 @@ public class launchFirstRed extends OpMode {
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, launchPath()),
+//                follow(follower, launchPath()),
                 Webcam.redCheck(cam).until(() -> time.seconds() > 24),
-                top.launch().unless(() -> time.seconds() > 24),  // untested
+                top.launch().unless(() -> time.seconds() > 24)  // untested
                 // Add mechanism commands here.
-                follow(follower, parkPath())
+//                follow(follower, parkPath())
         );
     }
 
@@ -60,6 +60,7 @@ public class launchFirstRed extends OpMode {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         top.init(hardwareMap);
+        cam.init(hardwareMap, telemetry);
         follower.setPose(startPose);
         follower.update();
     }
@@ -74,6 +75,8 @@ public class launchFirstRed extends OpMode {
     public void loop() {
         follower.update();
         Scheduler.execute();
+        cam.display();
+        telemetry.update();
     }
 }
 
