@@ -48,8 +48,7 @@ public class launchFirstRed extends OpMode {
      Command autoRoutine = sequential(
 //                follow(follower, launchPath()),
                 Webcam.redCheck(cam).until(() -> time.seconds() > 24),
-                top.launch().unless(() -> time.seconds() > 24)  // untested
-                // Add mechanism commands here.
+                top.launch().unless(() -> time.seconds() > 24)
 //                follow(follower, parkPath())
      );
     @Override
