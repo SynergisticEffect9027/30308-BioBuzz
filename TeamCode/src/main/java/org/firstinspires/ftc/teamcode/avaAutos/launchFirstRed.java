@@ -45,16 +45,13 @@ public class launchFirstRed extends OpMode {
         return curve(launch, controlPose, park).linear(launch, park);
     }
 
-    private Command autoRoutine() {
-        return sequential(
+     Command autoRoutine = sequential(
 //                follow(follower, launchPath()),
                 Webcam.redCheck(cam).until(() -> time.seconds() > 24),
                 top.launch().unless(() -> time.seconds() > 24)  // untested
                 // Add mechanism commands here.
 //                follow(follower, parkPath())
-        );
-    }
-
+     );
     @Override
     public void init() {
         Scheduler.reset();
@@ -67,7 +64,7 @@ public class launchFirstRed extends OpMode {
 
     @Override
     public void start() {
-        schedule(autoRoutine());
+        schedule(autoRoutine);
         time.reset();
     }
 
