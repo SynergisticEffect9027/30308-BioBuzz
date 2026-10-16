@@ -40,7 +40,7 @@ public class Webcam {
         builder.setCamera(hwMap.get(WebcamName.class, "webcam"));
         builder.setCameraResolution(new Size(640, 480));
         builder.addProcessor(aprilTagProcessor);
-
+        detectedTags = new ArrayList<>();
         visionPortal = builder.build();
     }
 
@@ -88,10 +88,11 @@ public class Webcam {
             }
         return null;
         }
-    public static Command redCheck(Webcam webcam){
+    public static Command redCheck(Webcam webcam, Telemetry telemetry){
         return Command.build()
                 .setExecute(webcam::update)
-                .setDone(() -> webcam.data() != null  && webcam.data().startsWith("RED"));
+                .setDone(() -> webcam.data() != null  && webcam.data().startsWith("RED"))
+                .setPriority(1);
     }
     public static Command blueCheck(Webcam webcam){
         return Command.build()

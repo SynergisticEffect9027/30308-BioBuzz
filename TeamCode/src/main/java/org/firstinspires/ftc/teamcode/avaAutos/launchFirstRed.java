@@ -20,6 +20,8 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 
+import java.util.Queue;
+
 @Autonomous
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
@@ -45,12 +47,6 @@ public class launchFirstRed extends OpMode {
         return curve(launch, controlPose, park).linear(launch, park);
     }
 
-     Command autoRoutine = sequential(
-//                follow(follower, launchPath()),
-                Webcam.redCheck(cam).until(() -> time.seconds() > 24),
-                top.launch().unless(() -> time.seconds() > 24)
-//                follow(follower, parkPath())
-     );
     @Override
     public void init() {
         Scheduler.reset();
@@ -61,9 +57,19 @@ public class launchFirstRed extends OpMode {
         follower.update();
     }
 
+    private Command autoRoutine() {
+        return sequential(
+                Webcam.redCheck(cam, telemetry)
+//                top.lanch()
+
+            //    follow(follower, launchPath()),
+//                follow(follower, parkPath())
+        );
+    }
+
     @Override
     public void start() {
-        schedule(autoRoutine);
+        schedule(autoRoutine());
         time.reset();
     }
 

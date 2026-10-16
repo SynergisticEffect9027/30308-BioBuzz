@@ -1,17 +1,20 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.Queue;
 
 public class topBot {
 
     private ElapsedTime time = new ElapsedTime();
     public DcMotor  intakeMotor;
     public DcMotorEx lancherMotor;
-    public void init(HardwareMap hwMap) {
+    public void init(HardwareMap hwMap){
 
         lancherMotor = hwMap.get(DcMotorEx.class, "lancher");
         intakeMotor = hwMap.get(DcMotor.class, "intake");
@@ -28,7 +31,7 @@ public class topBot {
         lancherMotor.setVelocity(launch);
     }
     public void stopLaunch(){
-        lancherMotor.setVelocity(0);
+        lancherMotor.setVelocity(0.0);
     }
     public void startIntake(){
         intakeMotor.setPower(.4);
@@ -36,8 +39,9 @@ public class topBot {
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
-    public Command launch(){
+    public Runnable launch(){
         // untested
+
         time.reset();
         while (time.seconds() < 6){
             startLaunch();
@@ -47,6 +51,13 @@ public class topBot {
                 stopLaunch();
             }
         }
-        return Command.build();
+        return null;
+    }
+    public  Command lanch(){
+        return Command.build()
+                .setStart(launch())
+        .setBlockedBehavior(BlockedBehavior.QUEUE);
+
+
     }
 }
