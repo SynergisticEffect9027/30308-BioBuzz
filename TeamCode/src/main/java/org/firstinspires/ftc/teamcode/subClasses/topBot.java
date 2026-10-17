@@ -53,11 +53,9 @@ public class topBot {
         }
         return null;
     }
-    public  Command lanch(){
+    public Command lanch(){
         return Command.build()
                 .setStart(launch())
         .setBlockedBehavior(BlockedBehavior.QUEUE);
-
-
     }
 }

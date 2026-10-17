@@ -12,6 +12,7 @@ import com.pedropathing.paths.Path;
 
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -55,21 +56,20 @@ public class launchFirstRed extends OpMode {
         cam.init(hardwareMap, telemetry);
         follower.setPose(startPose);
         follower.update();
+        cam.update();
     }
 
-    private Command autoRoutine() {
-        return sequential(
-                Webcam.redCheck(cam, telemetry)
-//                top.lanch()
-
-            //    follow(follower, launchPath()),
-//                follow(follower, parkPath())
-        );
-    }
 
     @Override
     public void start() {
-        schedule(autoRoutine());
+        schedule(
+                sequential(
+                    Webcam.redCheck(cam),
+                    top.lanch()
+                    //    follow(follower, launchPath()),
+    //                follow(follower, parkPath())
+                )
+        );
         time.reset();
     }
 
@@ -78,6 +78,7 @@ public class launchFirstRed extends OpMode {
         follower.update();
         Scheduler.execute();
         cam.display();
+        telemetry.addData("",cam.data());
         telemetry.update();
     }
 }

@@ -14,6 +14,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
+import static com.pedropathing.ivy.commands.Commands.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,10 +89,10 @@ public class Webcam {
             }
         return null;
         }
-    public static Command redCheck(Webcam webcam, Telemetry telemetry){
+    public static Command redCheck(Webcam webcam){
         return Command.build()
                 .setExecute(webcam::update)
-                .setDone(() -> webcam.data() != null  && webcam.data().startsWith("RED"))
+                .setDone(() -> webcam.data().startsWith("RED"))
                 .setPriority(1);
     }
     public static Command blueCheck(Webcam webcam){
