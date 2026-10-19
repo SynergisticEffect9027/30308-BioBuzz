@@ -64,7 +64,8 @@ public class launchFirstRed extends OpMode {
     public void start() {
         schedule(
                 sequential(
-                    Webcam.redCheck(cam),
+                    Webcam.updateloop(cam),
+                    waitUntil(Webcam.redcheck(cam)),
                     top.lanch()
                     //    follow(follower, launchPath()),
     //                follow(follower, parkPath())

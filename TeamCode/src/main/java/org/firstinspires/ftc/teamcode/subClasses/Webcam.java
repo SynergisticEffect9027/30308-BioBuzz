@@ -18,6 +18,7 @@ import static com.pedropathing.ivy.commands.Commands.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 public class Webcam {
     private AprilTagProcessor aprilTagProcessor;
@@ -89,17 +90,18 @@ public class Webcam {
             }
         return null;
         }
-    public static Command redCheck(Webcam webcam){
+    public static Command updateloop(Webcam webcam){
         return Command.build()
-                .setExecute(webcam::update)
-                .setDone(() -> webcam.data().startsWith("RED"))
-                .setPriority(1);
+                .setExecute(webcam::update);
     }
     public static Command blueCheck(Webcam webcam){
         return Command.build()
                 .setExecute(webcam::update)
                 .setDone(() -> webcam.data() != null
                         && webcam.data().startsWith("BLUE"));
+    }
+    public static BooleanSupplier redcheck(Webcam webcam){
+       return () -> webcam.data().startsWith("RED");
     }
 
     public void stopStreaming(){
