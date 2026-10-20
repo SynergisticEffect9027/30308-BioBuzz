@@ -27,17 +27,39 @@ public class telop extends OpMode {
 
         drive.drive(foward,strafe,rotate);
 
-        if(gamepad2.a){
+        if(gamepad2.a){ //start launch
             top.startLaunch();
         }
-        if (gamepad2.b){
+        if (gamepad2.aWasReleased()){ //stop launch
             top.stopLaunch();
         }
-        if (gamepad2.x){
+        if (gamepad2.x){ //start intake
             top.startIntake();
         }
-        if (gamepad2.y){
+        if (gamepad2.xWasReleased()){ //stop intake
             top.stopIntake();
         }
+        if (gamepad2.y){ //start servo
+            top.startServo();
+        }
+        if (gamepad2.yWasReleased()){ //stop servo
+            top.stopServo();
+        }
+        if (gamepad2.b){ //start servo and motor
+            top.startIntakeServo();
+        }
+        if (gamepad2.bWasReleased()){ //stop servo and motor
+            top.stopIntakeServo();
+        }
+        if (gamepad2.dpad_up){
+            top.launch(true); //just intake
+        }
+        if (gamepad2.dpad_down){
+            top.launch(1); //just servo
+        }
+        if (gamepad2.dpad_right){
+            top.launch(0.5); //servo and motor
+        }
+
     }
 }
