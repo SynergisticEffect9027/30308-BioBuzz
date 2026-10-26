@@ -30,6 +30,8 @@ public class launchFirstRed extends OpMode {
     private final Pose park = p.of(10.00, 98.16, 0);
     private final Pose controlPose = p.of(13.133723935895226, 42.447010167154914, 0); //for curve
 
+    private final Pose controlPoseFromStart = p.of(23, 33, 0);
+
     private Path launchPath() {
         return line(startPose, launch).linear(startPose, launch);
     }
@@ -37,13 +39,15 @@ public class launchFirstRed extends OpMode {
     private Path parkPath() {
         return curve(launch, controlPose, park).linear(launch, park);
     }
+    private Path parkPathFromStart(){return curve(startPose, controlPoseFromStart, park);}
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, launchPath()),
+                follow(follower, launchPath()), //goes forward, then launch
                 top.launch(),  // untested
                 // Add mechanism commands here.
                 follow(follower, parkPath())
+                //follow(follower, parkPathFromStart();
         );
     }
 
