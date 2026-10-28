@@ -24,7 +24,7 @@ public class topBot {
     public void startLaunch(){
         double targetRPM = 5000; //shooter
         double ticksPerRev = 28;
-        double launch = targetRPM/ticksPerRev;
+        double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
     }
     public void stopLaunch(){
