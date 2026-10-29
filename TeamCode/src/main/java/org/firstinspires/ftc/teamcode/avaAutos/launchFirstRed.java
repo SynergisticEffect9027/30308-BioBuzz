@@ -48,39 +48,36 @@ public class launchFirstRed extends OpMode {
         return curve(launch, controlPose, park).linear(launch, park);
     }
 
+    private Command autoRoutine() {
+        return sequential(
+                follow(follower, launchPath()), //goes forward, then launch
+                Webcam.updateloop(cam),
+                waitUntil(()->cam.data().startsWith("RED")),
+                instant(top.launch()),  // untested
+                // Add mechanism commands here.
+                follow(follower, parkPath())
+                //follow(follower, parkPathFromStart();
+        );
+    }
+
     @Override
     public void init() {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         top.init(hardwareMap);
-        cam.init(hardwareMap, telemetry);
         follower.setPose(startPose);
         follower.update();
-        cam.update();
     }
-
 
     @Override
     public void start() {
-        schedule(
-                sequential(
-                    Webcam.updateloop(cam),
-                    waitUntil(Webcam.redcheck(cam)),
-                    top.lanch()
-                    //    follow(follower, launchPath()),
-    //                follow(follower, parkPath())
-                )
-        );
-        time.reset();
+        schedule(autoRoutine());
     }
 
     @Override
     public void loop() {
         follower.update();
         Scheduler.execute();
-        cam.display();
-        telemetry.addData("",cam.data());
-        telemetry.update();
     }
 }
 

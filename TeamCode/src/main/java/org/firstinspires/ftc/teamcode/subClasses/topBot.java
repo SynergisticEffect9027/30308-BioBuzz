@@ -41,7 +41,6 @@ public class topBot {
     }
     public Runnable launch(){
         // untested
-
         time.reset();
         while (time.seconds() < 6){
             startLaunch();
@@ -52,10 +51,5 @@ public class topBot {
             }
         }
         return null;
-    }
-    public Command lanch(){
-        return Command.build()
-                .setStart(launch())
-        .setBlockedBehavior(BlockedBehavior.QUEUE);
     }
 }
