@@ -20,6 +20,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 @Autonomous
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
+    //Will this also work on Blue since they're flipped???
     private Follower follower;
 
     topBot top = new topBot();
@@ -28,7 +29,7 @@ public class launchFirstRed extends OpMode {
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
     private final Pose launch = p.of(60.00, 25.00, 0);
     private final Pose park = p.of(10.00, 98.16, 0);
-    private final Pose controlPose = p.of(13.133723935895226, 42.447010167154914, 0); //for curve
+    private final Pose controlPose = p.of(13, 42, 0); //for curve
 
     private final Pose controlPoseFromStart = p.of(23, 33, 0);
 
