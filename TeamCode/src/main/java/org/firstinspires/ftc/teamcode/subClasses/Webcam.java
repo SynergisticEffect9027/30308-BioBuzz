@@ -46,8 +46,9 @@ public class Webcam {
         visionPortal = builder.build();
     }
 
-    public void update(){
+    public Runnable update(){
         detectedTags = aprilTagProcessor.getDetections();
+        return null;
     }
 
     public List<AprilTagDetection> getDetectedTags() {
@@ -90,10 +91,8 @@ public class Webcam {
             }
         return null;
         }
-    public static Command updateloop(Webcam webcam){
-        return Command.build()
-                .setExecute(webcam::update);
-    }
+    public Command updateloop = Command.build()
+                .setExecute(() -> update());
     public static Command blueCheck(Webcam webcam){
         return Command.build()
                 .setExecute(webcam::update)

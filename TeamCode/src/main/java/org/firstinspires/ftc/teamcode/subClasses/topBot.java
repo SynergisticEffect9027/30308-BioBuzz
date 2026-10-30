@@ -16,7 +16,7 @@ public class topBot {
     public DcMotorEx lancherMotor;
     public void init(HardwareMap hwMap){
 
-        lancherMotor = hwMap.get(DcMotorEx.class, "lancher");
+        lancherMotor = hwMap.get(DcMotorEx.class, "launcher");
         intakeMotor = hwMap.get(DcMotor.class, "intake");
 
         lancherMotor.setDirection(DcMotorEx.Direction.FORWARD);
@@ -39,17 +39,10 @@ public class topBot {
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
-    public Runnable launch(){
+    public Command launch = Command.build()
+            .setStart(() ->{
         // untested
-        time.reset();
-        while (time.seconds() < 6){
-            startLaunch();
-            if (time.seconds() > 3){
-            }
-            if (time.seconds() > 5){
-                stopLaunch();
-            }
-        }
-        return null;
+                        lancherMotor.setVelocity(1000);
     }
+    );
 }
