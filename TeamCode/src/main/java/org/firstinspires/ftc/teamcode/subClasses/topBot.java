@@ -4,6 +4,7 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -23,8 +24,8 @@ public class topBot {
 
         lancherMotor.setDirection(DcMotorEx.Direction.REVERSE);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
-        intakeServo.setDirection(DcMotor.Direction.FORWARD);
-        passMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakeServo.setDirection(DcMotor.Direction.REVERSE);
+        passMotor.setDirection(DcMotor.Direction.FORWARD);
 
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
