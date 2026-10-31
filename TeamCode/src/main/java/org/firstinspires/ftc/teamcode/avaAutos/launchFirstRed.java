@@ -9,9 +9,11 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import static com.pedropathing.api.Paths.*;
 import com.pedropathing.paths.Path;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.commands.Commands.instant;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
 import static com.pedropathing.ivy.groups.Groups.sequential;
@@ -24,6 +26,7 @@ public class launchFirstRed extends OpMode {
     private Follower follower;
 
     topBot top = new topBot();
+    ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
@@ -44,8 +47,7 @@ public class launchFirstRed extends OpMode {
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, launchPath()), //goes forward, then launch
-                top.launch(),  // untested
+                launchYay,  // untested
                 // Add mechanism commands here.
                 follow(follower, parkPath())
                 //follow(follower, parkPathFromStart();
@@ -70,8 +72,26 @@ public class launchFirstRed extends OpMode {
     @Override
     public void loop() {
         follower.update();
+        Pose robotPose = follower.pose(); // returns a Pose object
+        telemetry.addData("Robot X", robotPose.x());
+        telemetry.addData("Robot Y", robotPose.y());
+        telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
         Scheduler.execute();
     }
+
+    Command launchYay = Command.build()
+            .setExecute(() -> {
+                time.reset();
+                while (time.seconds() < 6){
+                    top.startLaunch();
+                    if (time.seconds() > 3){
+                        top.startPass();
+                    }
+                }
+            })
+            .setDone(() -> time.seconds() > 6)
+            .setEnd(endCondition -> top.stopPass())
+            .requiring(top.passMotor);
 }
 
 //Things ava needs to do:

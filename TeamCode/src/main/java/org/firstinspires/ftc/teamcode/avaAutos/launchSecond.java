@@ -14,6 +14,8 @@ import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
 
@@ -24,6 +26,7 @@ public class launchSecond extends OpMode {
     private Follower follower;
 
     topBot top = new topBot();
+    ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
@@ -38,15 +41,15 @@ public class launchSecond extends OpMode {
     private Path parkPath() {
         return line(launch, park).linear(launch, park);
     }
-    private Path parkPathFromStart(){return line(startPose, park);}
+    private Path parkPathFromStart(){return line(startPose, park).linear(startPose, park);}
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, launchPath()), //goes forward, then launch
-                top.launch(),  // untested
+               // follow(follower, launchPath()), //goes forward, then launch
+                launchYay,  // untested
                 // Add mechanism commands here.
-                follow(follower, parkPath())
-                //follow(follower, parkPathFromStart();
+                //follow(follower, parkPath())
+                follow(follower, parkPathFromStart())
         );
     }
 
@@ -68,8 +71,28 @@ public class launchSecond extends OpMode {
     @Override
     public void loop() {
         follower.update();
+        Pose robotPose = follower.pose(); // returns a Pose object
+        telemetry.addData("Robot X", robotPose.x());
+        telemetry.addData("Robot Y", robotPose.y());
+        telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
         Scheduler.execute();
     }
+
+    Command launchYay = Command.build()
+            .setExecute(() -> {
+                time.reset();
+                while (time.seconds() < 15) {
+                    while (time.seconds() < 12 && time.seconds() > 6) {
+                        top.startLaunch();
+                        if (time.seconds() > 9) {
+                            top.startPass();
+                        }
+                    }
+                }
+            })
+            .setDone(() -> time.seconds() > 12)
+            .setEnd(endCondition -> top.stopPass())
+            .requiring(top.passMotor);
 }
 
 //Things ava needs to do:

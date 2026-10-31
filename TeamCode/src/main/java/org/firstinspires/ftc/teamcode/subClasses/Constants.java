@@ -33,7 +33,7 @@ public class Constants {
         c.name.set("otos");
         c.linearScalar.set(28.741543597122302);
         c.angularScalar.set(0.9302338785341762);
-        c.offset.set(new Pose(-0, -0, Math.PI/2));
+        c.offset.set(new Pose(-8, -0, Math.PI/2));
         c.linearUnit.set(DistanceUnit.INCH);
     });
 
