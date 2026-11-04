@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subClasses.driveTrain;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
@@ -14,6 +15,7 @@ public class telop extends OpMode {
 
     driveTrain drive = new driveTrain();
     topBot top = new topBot();
+    private ElapsedTime time = new ElapsedTime();
     @Override
     public void init(){
         drive.init(hardwareMap);
@@ -45,10 +47,10 @@ public class telop extends OpMode {
         if (gamepad2.yWasReleased()){ //stop servo
             top.stopServo();
         }
-        if (gamepad2.b){ //start servo and motor
+        if (gamepad2.bWasPressed()){
             top.startPass();
         }
-        if (gamepad2.bWasReleased()){ //stop servo and motor
+        if (gamepad2.bWasReleased()){
             top.stopPass();
         }
         if (gamepad2.dpad_up){
@@ -62,12 +64,14 @@ public class telop extends OpMode {
         }
         /*
         a: shooter
-        x: intake
+        x: intake & pass
         y: servo
         b: pass
         up: launch intake
         down: launch sevo
         right: launch pass and motor
          */
+        telemetry.addData("velocity",top.getVe());
+        telemetry.update();
     }
 }

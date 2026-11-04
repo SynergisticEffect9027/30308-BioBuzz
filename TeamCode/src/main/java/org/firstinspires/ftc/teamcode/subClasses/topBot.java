@@ -30,7 +30,7 @@ public class topBot {
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void startLaunch(){
-        double targetRPM = 5000; //shooter
+        double targetRPM = 6000; //shooter
         double ticksPerRev = 28;
         double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
@@ -39,13 +39,15 @@ public class topBot {
         lancherMotor.setVelocity(0);
     }
     public void startIntake(){
-        intakeMotor.setPower(.4);
+        intakeMotor.setPower(.5);
+        passMotor.setPower(.5);
     }
     public void stopIntake(){
         intakeMotor.setPower(0);
+        passMotor.setPower(0);
     }
     public void startPass(){
-        passMotor.setPower(.4);
+        passMotor.setPower(1);
     }
     public void stopPass(){
         passMotor.setPower(0);
@@ -96,12 +98,19 @@ public class topBot {
     public Command launch(double servoMotor){
         // untested
         time.reset();
-        while (time.seconds() < 6){
+        while (time.seconds() < 3){
             startLaunch();
-            if (time.seconds() > 3){
+            if (time.seconds() > 2){
                 startPassServo();
             }
-            if (time.seconds() > 5){
+            if (time.seconds() > 2.2){
+                stopLaunch();
+                stopPassServo();
+            }
+            if (time.seconds() > 2.4){
+                startPassServo();
+            }
+            if (time.seconds() > 2.6){
                 stopLaunch();
                 stopPassServo();
             }
@@ -118,5 +127,7 @@ public class topBot {
         stopPass();
         stopServo();
     }
-
+    public double getVe(){
+        return lancherMotor.getVelocity();
+    }
 }
