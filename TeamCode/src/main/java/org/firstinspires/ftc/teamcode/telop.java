@@ -44,14 +44,14 @@ public class telop extends OpMode {
         if (gamepad2.bWasPressed()){
             top.startPass();
         }
-        else if (gamepad2.bWasReleased()) {
+        if (gamepad2.bWasReleased()) {
             top.stopPass();
         }
-        else if (gamepad2.y){ //start servo
-            top.startPassServo();
+        if (gamepad2.y){ //start servo
+            top.startServo();
         }
-        else if (gamepad2.yWasReleased()){ //stop servo
-            top.stopPassServo();
+        if (gamepad2.yWasReleased()){ //stop servo
+            top.stopServo();
         }
         if (gamepad2.dpad_up){
             top.launch(true); //just pass
