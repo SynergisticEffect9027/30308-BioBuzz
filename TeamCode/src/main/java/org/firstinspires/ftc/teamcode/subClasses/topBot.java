@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class topBot {
@@ -28,9 +29,12 @@ public class topBot {
         passMotor.setDirection(DcMotor.Direction.FORWARD);
 
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        PIDFCoefficients flywheel = new PIDFCoefficients(37 , 0 , 0 ,24);
+        lancherMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, flywheel);
     }
     public void startLaunch(){
-        double targetRPM = 6000; //shooter
+        double targetRPM = 55000; //shooter
         double ticksPerRev = 28;
         double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
@@ -39,12 +43,19 @@ public class topBot {
         lancherMotor.setVelocity(0);
     }
     public void startIntake(){
-        intakeMotor.setPower(.5);
+        intakeMotor.setPower(.75);
         passMotor.setPower(.5);
     }
     public void stopIntake(){
         intakeMotor.setPower(0);
         passMotor.setPower(0);
+    }
+    public void startIntakeR(){
+        intakeMotor.setPower(-.75);
+    }
+    public void startShooterR(){
+        lancherMotor.setPower(-.5);
+        intakeServo.setPower(-1);
     }
     public void startPass(){
         passMotor.setPower(1);
@@ -103,14 +114,14 @@ public class topBot {
             if (time.seconds() > 2){
                 startPassServo();
             }
-            if (time.seconds() > 2.2){
+            if (time.seconds() > 2.25){
                 stopLaunch();
                 stopPassServo();
             }
-            if (time.seconds() > 2.4){
+            if (time.seconds() > 2.6){
                 startPassServo();
             }
-            if (time.seconds() > 2.6){
+            if (time.seconds() > 2.8){
                 stopLaunch();
                 stopPassServo();
             }

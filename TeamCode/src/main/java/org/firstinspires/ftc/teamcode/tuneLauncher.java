@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 @TeleOp
 public class tuneLauncher extends OpMode {
     private DcMotorEx launch;
-    private double highVelocity = 1500;
+    private double highVelocity = 2600;
     private double lowVelocity = 900;
     private double curTagetVelocity = highVelocity;
-    private double F = 0;
-    private double P = 0;
+    private double F = 24;
+    private double P = 37;
 
     double[] stepSizes = {10.0, 1.0, 0.1, 0.01};
 

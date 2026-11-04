@@ -42,15 +42,15 @@ public class telop extends OpMode {
             top.stopIntake();
         }
         if (gamepad2.y){ //start servo
-            top.startServo();
+            top.startPassServo();
         }
-        if (gamepad2.yWasReleased()){ //stop servo
-            top.stopServo();
+        else if (gamepad2.yWasReleased()){ //stop servo
+            top.stopPassServo();
         }
-        if (gamepad2.bWasPressed()){
+        else if (gamepad2.bWasPressed()){
             top.startPass();
         }
-        if (gamepad2.bWasReleased()){
+        else if (gamepad2.bWasReleased()){
             top.stopPass();
         }
         if (gamepad2.dpad_up){
@@ -61,6 +61,19 @@ public class telop extends OpMode {
         }
         if (gamepad2.dpad_right){
             top.launch(0.5); //servo and motor
+        }
+        if (gamepad2.left_trigger_pressed){
+            top.startIntakeR(); //servo and motor
+        }
+        if (!gamepad2.left_trigger_pressed){
+            top.stopIntake(); //servo and motor
+        }
+        if (gamepad2.right_trigger_pressed){
+            top.startShooterR(); //servo and motor
+        }
+        if (!gamepad2.right_trigger_pressed){
+            top.stopLaunch();
+            top.stopServo();
         }
         /*
         a: shooter
