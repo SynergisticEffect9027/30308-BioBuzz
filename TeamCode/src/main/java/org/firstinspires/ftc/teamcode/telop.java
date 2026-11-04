@@ -79,9 +79,12 @@ public class telop extends OpMode {
         x: intake & pass
         y: servo
         b: pass
-        up: launch intake
-        down: launch sevo
-        right: launch pass and motor
+        right trigger: reverse shooter
+        left trigger: reverse intake
+        don't use? :
+            up: launch intake
+            down: launch sevo
+            right: launch pass and motor
          */
         telemetry.addData("velocity",top.getVe());
         telemetry.update();
