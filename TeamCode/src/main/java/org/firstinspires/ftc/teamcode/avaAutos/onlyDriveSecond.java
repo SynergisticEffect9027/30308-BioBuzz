@@ -26,7 +26,7 @@ public class onlyDriveSecond extends OpMode {
     topBot top = new topBot();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose startPose = p.of(64, 134.80, 0);//three tiles away from blue line
     private final Pose park = p.of(10.00, 112.00, 0);
 
 

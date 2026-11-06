@@ -34,7 +34,7 @@ public class onlyDriveFirst extends OpMode {
 
     private final Pose controlPoseFromStart = p.of(23, 33, 0);
 
-    private Path parkPathFromStart(){return curve(startPose, controlPoseFromStart, park);}
+    private Path parkPathFromStart(){return curve(startPose, controlPoseFromStart, park).constant(0);}
 
     private Command autoRoutine() {
         return sequential(

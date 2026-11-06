@@ -29,7 +29,7 @@ public class launchSecond extends OpMode {
     ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose startPose = p.of(64.00, 134.80, 0);//three tiles away from blue garden. On the line connecting the second and third tile. facing red goal
     private final Pose launch = p.of(60.00, 119.00, 0);
     private final Pose park = p.of(10.00, 112.00, 0);
 

@@ -43,7 +43,7 @@ public class launchFirstRed extends OpMode {
     private Path parkPath() {
         return curve(launch, controlPose, park).linear(launch, park);
     }
-    private Path parkPathFromStart(){return curve(startPose, controlPoseFromStart, park);}
+    private Path parkPathFromStart(){return curve(startPose, controlPoseFromStart, park).constant(0);}
 
     private Command autoRoutine() {
         return sequential(
