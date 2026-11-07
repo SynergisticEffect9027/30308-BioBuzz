@@ -29,7 +29,7 @@ public class topBot {
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void startLaunch(){
-        double targetRPM = 5000; //shooter
+        double targetRPM = 4200; //shooter
         double ticksPerRev = 28;
         double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
