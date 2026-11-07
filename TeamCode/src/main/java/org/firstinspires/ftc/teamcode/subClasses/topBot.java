@@ -107,7 +107,7 @@ public class topBot {
         }
         return null;
     }
-    public void startServo() {intakeServo.setPower(1);}
+    public void startServo() {intakeServo.setPower(-1);}
     public void stopServo() {intakeServo.setPower(0);}
     public void startPassServo(){
         startPass();
