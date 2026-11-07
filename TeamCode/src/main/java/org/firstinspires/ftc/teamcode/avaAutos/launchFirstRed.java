@@ -85,7 +85,7 @@ public class launchFirstRed extends OpMode {
                 while (time.seconds() < 6){
                     top.startLaunch();
                     if (time.seconds() > 3){
-                        top.startPass();
+                        top.startServo();
                     }
                 }
             })
