@@ -4,7 +4,9 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class topBot {
@@ -23,10 +25,13 @@ public class topBot {
 
         lancherMotor.setDirection(DcMotorEx.Direction.REVERSE);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
-        intakeServo.setDirection(DcMotor.Direction.FORWARD);
-        passMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakeServo.setDirection(DcMotor.Direction.REVERSE);
+        passMotor.setDirection(DcMotor.Direction.FORWARD);
 
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        PIDFCoefficients flywheel = new PIDFCoefficients(37 , 0 , 0 ,24);
+        lancherMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, flywheel);
     }
     public void startLaunch(){
         double targetRPM = 4200; //shooter
@@ -38,13 +43,20 @@ public class topBot {
         lancherMotor.setVelocity(0);
     }
     public void startIntake(){
-        intakeMotor.setPower(.4);
+        intakeMotor.setPower(.75);
     }
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
+    public void startIntakeR(){
+        intakeMotor.setPower(-.75);
+    }
+    public void startShooterR(){
+        lancherMotor.setPower(-.5);
+        intakeServo.setPower(-1);
+    }
     public void startPass(){
-        passMotor.setPower(.4);
+        passMotor.setPower(1);
     }
     public void stopPass(){
         passMotor.setPower(0);
@@ -95,19 +107,26 @@ public class topBot {
     public Command launch(double servoMotor){
         // untested
         time.reset();
-        while (time.seconds() < 6){
+        while (time.seconds() < 3){
             startLaunch();
-            if (time.seconds() > 3){
+            if (time.seconds() > 2){
                 startPassServo();
             }
-            if (time.seconds() > 5){
+            if (time.seconds() > 2.25){
+                stopLaunch();
+                stopPassServo();
+            }
+            if (time.seconds() > 2.6){
+                startPassServo();
+            }
+            if (time.seconds() > 2.8){
                 stopLaunch();
                 stopPassServo();
             }
         }
         return null;
     }
-    public void startServo() {intakeServo.setPower(-1);}
+    public void startServo() {intakeServo.setPower(1);}
     public void stopServo() {intakeServo.setPower(0);}
     public void startPassServo(){
         startPass();
@@ -117,5 +136,7 @@ public class topBot {
         stopPass();
         stopServo();
     }
-
+    public double getVe(){
+        return lancherMotor.getVelocity();
+    }
 }
