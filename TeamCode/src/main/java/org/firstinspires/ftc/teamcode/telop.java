@@ -38,31 +38,42 @@ public class telop extends OpMode {
         else{ //stop intake
             top.stopIntake();
         }
-        if (gamepad2.b){
-            top.startPass();
-        }
-        if (gamepad2.bWasReleased()) {
-            top.stopPass();
-        }
-        if (gamepad2.right_trigger_pressed){
+        if (gamepad2.a){
             top.startShooterR(); //servo and motor
         }
         else {
-            if(gamepad2.a && gamepad2.b){
-                top.startServo();
+            if (gamepad2.right_trigger_pressed && gamepad2.right_stick_y > .1){
                 top.startLaunch();
-            }
-            else if (gamepad2.a) { //start launch
-                top.startLaunch();
-                top.stopServo();
-            }
-            else if (gamepad2.y) { //start servo
                 top.startServo();
-                top.stopLaunch();
+                top.startPass();
             }
-            else{
-                top.stopLaunch();
-                top.stopServo();
+            else {
+                if (gamepad2.x){
+                    top.startPass();
+                }
+                else{
+                    if(gamepad2.right_bumper && gamepad2.right_stick_y >.1){
+                        top.startServo();
+                        top.startLaunch();
+                        top.stopPass();
+                    }
+                    else if (gamepad2.right_stick_y > .1) { //start launch
+                        top.startLaunch();
+                        top.stopServo();
+                        top.stopPass();
+                    }
+                    else if (gamepad2.right_bumper) { //start servo
+                        top.stopServo();
+                        top.stopLaunch();
+                        top.startPass();
+                    }
+                    else{
+                        top.stopLaunch();
+                        top.stopServo();
+                        top.stopPass();
+                    }
+                }
+
             }
         }
         if (gamepad2.dpad_up){
