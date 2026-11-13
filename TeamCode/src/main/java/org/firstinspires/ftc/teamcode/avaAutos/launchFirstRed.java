@@ -51,13 +51,15 @@ public class launchFirstRed extends OpMode {
 
     private Command autoRoutine() {
         return parallel(
-//                follow(follower, launchPath()), //goes forward, then launch
                 cam.updateloop,
-                sequential(waitUntil(()->cam.data().startsWith("RED")),
-                top.launch)  // untested
+                sequential(
+                        waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
+                        top.launch
+                )  // untested
                 // Add mechanism commands here.
 //                follow(follower, parkPath())
                 //follow(follower, parkPathFromStart();
+                // follow(follower, launchPath()), //goes forward, then launch
         );
     }
 
@@ -80,6 +82,8 @@ public class launchFirstRed extends OpMode {
     public void loop() {
         follower.update();
         Scheduler.execute();
+        telemetry.addData("hi", cam.data());
+        telemetry.update();
     }
 }
 
