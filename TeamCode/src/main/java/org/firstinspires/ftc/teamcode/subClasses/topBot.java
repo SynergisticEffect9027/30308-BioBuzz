@@ -34,7 +34,7 @@ public class topBot {
         lancherMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, flywheel);
     }
     public void startLaunch(){
-        double targetRPM = 4200; //shooter
+        double targetRPM = 4000; //shooter
         double ticksPerRev = 28;
         double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
@@ -49,7 +49,7 @@ public class topBot {
         intakeMotor.setPower(0);
     }
     public void startIntakeR(){
-        intakeMotor.setPower(-.75);
+        intakeMotor.setPower(-.5);
     }
     public void startShooterR(){
         lancherMotor.setPower(-.5);
