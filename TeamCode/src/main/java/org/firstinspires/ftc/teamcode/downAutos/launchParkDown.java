@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.subClasses.Constants;
 import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
-@Autonomous
+@Autonomous(name="RedLaunchDown")
 public class launchParkDown extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
