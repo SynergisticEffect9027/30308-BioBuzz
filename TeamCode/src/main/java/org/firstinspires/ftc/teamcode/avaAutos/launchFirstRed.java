@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.downAutos;
+package org.firstinspires.ftc.teamcode.avaAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -14,7 +14,7 @@ import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.groups.Groups.parallel;
-
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -22,8 +22,10 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 
+import java.util.Queue;
+
 @Autonomous
-public class shootParkDown extends OpMode {
+public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
 
