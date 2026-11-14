@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 import org.firstinspires.ftc.teamcode.subClasses.driveTrain;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
@@ -13,6 +14,7 @@ public class telop extends OpMode {
 
     double foward, strafe, rotate;
 
+    Webcam cam = new Webcam();
     driveTrain drive = new driveTrain();
     topBot top = new topBot();
     private ElapsedTime time = new ElapsedTime();
@@ -20,9 +22,14 @@ public class telop extends OpMode {
     public void init(){
         drive.init(hardwareMap);
         top.init(hardwareMap);
+        cam.init(hardwareMap, telemetry);
     }
     @Override
     public void loop(){
+        cam.update();
+        cam.display();
+        telemetry.update();
+
         foward = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         strafe =  gamepad1.left_stick_x;
         rotate =  gamepad1.right_stick_x;

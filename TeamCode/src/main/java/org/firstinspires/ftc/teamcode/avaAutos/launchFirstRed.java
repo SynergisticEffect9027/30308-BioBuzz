@@ -16,14 +16,21 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.instant;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
+import org.firstinspires.ftc.teamcode.subClasses.Webcam;
+
+import java.util.Queue;
 
 @Autonomous
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     //Will this also work on Blue since they're flipped???
     private Follower follower;
+
+    private ElapsedTime time = new ElapsedTime();
 
     topBot top = new topBot();
     ElapsedTime time = new ElapsedTime();
@@ -59,6 +66,7 @@ public class launchFirstRed extends OpMode {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         top.init(hardwareMap);
+        cam.init(hardwareMap, telemetry);
         follower.setPose(startPose);
         follower.update();
     }
@@ -66,7 +74,6 @@ public class launchFirstRed extends OpMode {
     @Override
     public void start() {
         schedule(autoRoutine());
-
     }
 
     @Override
@@ -77,6 +84,8 @@ public class launchFirstRed extends OpMode {
         telemetry.addData("Robot Y", robotPose.y());
         telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
         Scheduler.execute();
+        telemetry.addData("hi", cam.data());
+        telemetry.update();
     }
 
     Command launchYay = Command.build()

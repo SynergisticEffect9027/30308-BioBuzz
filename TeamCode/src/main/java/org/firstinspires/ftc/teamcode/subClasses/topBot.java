@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.Queue;
 
 public class topBot {
 
@@ -40,7 +43,7 @@ public class topBot {
         lancherMotor.setVelocity(launch);
     }
     public void stopLaunch(){
-        lancherMotor.setVelocity(0);
+        lancherMotor.setVelocity(0.0);
     }
     public void startIntake(){
         intakeMotor.setPower(.75);
@@ -48,6 +51,7 @@ public class topBot {
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
+    
     public void startIntakeR(){
         intakeMotor.setPower(-.5);
     }
@@ -61,19 +65,12 @@ public class topBot {
     public void stopPass(){
         passMotor.setPower(0);
     }
-    public Command launch(){
+    public Command launch = Command.build()
+            .setStart(() ->{
         // untested
-        time.reset();
-        while (time.seconds() < 6){
-            startLaunch();
-            if (time.seconds() > 3){
-            }
-            if (time.seconds() > 5){
-                stopLaunch();
-            }
-        }
-        return null;
+         lancherMotor.setVelocity(1000);
     }
+    );
     public Command launch(boolean motor){
         // untested
         time.reset();
