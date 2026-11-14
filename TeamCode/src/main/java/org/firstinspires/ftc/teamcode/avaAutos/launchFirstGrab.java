@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.avaAutos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
@@ -24,6 +25,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 
 @Autonomous
+@Disabled
 public class launchFirstGrab extends OpMode {
     //Goes from starting on the higher hive on the red side, shoots, then moves to the garden to collect pollen
     private Follower follower;

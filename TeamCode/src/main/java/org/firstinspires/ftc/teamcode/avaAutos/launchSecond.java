@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.avaAutos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
@@ -20,6 +21,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 
 @Autonomous
+@Disabled
 public class launchSecond extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     //Will this also work on Blue since they're flipped???

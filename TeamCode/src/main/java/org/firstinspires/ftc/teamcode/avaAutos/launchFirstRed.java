@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.avaAutos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 import java.util.Queue;
 
 @Autonomous
+@Disabled
 public class launchFirstRed extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     //Will this also work on Blue since they're flipped???
@@ -33,7 +35,7 @@ public class launchFirstRed extends OpMode {
     private ElapsedTime time = new ElapsedTime();
 
     topBot top = new topBot();
-    ElapsedTime time = new ElapsedTime();
+//    ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
     private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
@@ -66,7 +68,7 @@ public class launchFirstRed extends OpMode {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         top.init(hardwareMap);
-        cam.init(hardwareMap, telemetry);
+//        cam.init(hardwareMap, telemetry);
         follower.setPose(startPose);
         follower.update();
     }
@@ -84,7 +86,7 @@ public class launchFirstRed extends OpMode {
         telemetry.addData("Robot Y", robotPose.y());
         telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
         Scheduler.execute();
-        telemetry.addData("hi", cam.data());
+//        telemetry.addData("hi", cam.data());
         telemetry.update();
     }
 
