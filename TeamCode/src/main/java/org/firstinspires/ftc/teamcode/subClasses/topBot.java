@@ -18,6 +18,8 @@ public class topBot {
     public DcMotor  intakeMotor;
     public DcMotor  passMotor;
     public DcMotorEx lancherMotor;
+
+    public boolean x = false;
     public CRServo intakeServo;
     public void init(HardwareMap hwMap) {
 
@@ -65,12 +67,25 @@ public class topBot {
     public void stopPass(){
         passMotor.setPower(0);
     }
+
     public Command launch = Command.build()
             .setStart(() ->{
-        // untested
-         lancherMotor.setVelocity(1000);
-    }
-    );
+                time.reset();
+                while (time.seconds() < 3){
+                    lancherMotor.setVelocity(1000);
+                    if (time.seconds() > 2){
+                        passMotor.setPower(1);
+                        intakeServo.setPower(1);
+                    }
+                    if (time.seconds() > 2.25){
+                        passMotor.setPower(0);
+                        intakeServo.setPower(0);
+                        lancherMotor.setVelocity(0);
+                    }
+                }
+                x = true;
+            })
+            .setDone(() -> x);
     public Command launch(boolean motor){
         // untested
         time.reset();
