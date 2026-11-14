@@ -2,9 +2,12 @@ package org.firstinspires.ftc.teamcode.subClasses;
 
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.behaviors.BlockedBehavior;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Queue;
@@ -13,36 +16,124 @@ public class topBot {
 
     private ElapsedTime time = new ElapsedTime();
     public DcMotor  intakeMotor;
+    public DcMotor  passMotor;
     public DcMotorEx lancherMotor;
-    public void init(HardwareMap hwMap){
+    public CRServo intakeServo;
+    public void init(HardwareMap hwMap) {
 
         lancherMotor = hwMap.get(DcMotorEx.class, "launcher");
         intakeMotor = hwMap.get(DcMotor.class, "intake");
+        intakeServo = hwMap.get(CRServo.class, "passServo");
+        passMotor = hwMap.get(DcMotor.class, "pass");
 
-        lancherMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        lancherMotor.setDirection(DcMotorEx.Direction.REVERSE);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeServo.setDirection(DcMotor.Direction.REVERSE);
+        passMotor.setDirection(DcMotor.Direction.FORWARD);
 
         lancherMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        PIDFCoefficients flywheel = new PIDFCoefficients(37 , 0 , 0 ,24);
+        lancherMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, flywheel);
     }
     public void startLaunch(){
-        double targetRPM = 5000; //shooter
+        double targetRPM = 4000; //shooter
         double ticksPerRev = 28;
-        double launch = targetRPM/ticksPerRev;
+        double launch = targetRPM * ticksPerRev / 60;
         lancherMotor.setVelocity(launch);
     }
     public void stopLaunch(){
         lancherMotor.setVelocity(0.0);
     }
     public void startIntake(){
-        intakeMotor.setPower(.4);
+        intakeMotor.setPower(.75);
     }
     public void stopIntake(){
         intakeMotor.setPower(0);
     }
+    
+    public void startIntakeR(){
+        intakeMotor.setPower(-.5);
+    }
+    public void startShooterR(){
+        lancherMotor.setPower(-.5);
+        intakeServo.setPower(-1);
+    }
+    public void startPass(){
+        passMotor.setPower(1);
+    }
+    public void stopPass(){
+        passMotor.setPower(0);
+    }
     public Command launch = Command.build()
             .setStart(() ->{
         // untested
-                        lancherMotor.setVelocity(1000);
+         lancherMotor.setVelocity(1000);
     }
     );
+    public Command launch(boolean motor){
+        // untested
+        time.reset();
+        while (time.seconds() < 6){
+            startLaunch();
+            if (time.seconds() > 3){
+                startPass();
+            }
+            if (time.seconds() > 5){
+                stopLaunch();
+                stopPass();
+            }
+        }
+        return null;
+    }
+    public Command launch(int servo){
+        // untested
+        time.reset();
+        while (time.seconds() < 6){
+            startLaunch();
+            if (time.seconds() > 3){
+                startServo();
+            }
+            if (time.seconds() > 5){
+                stopLaunch();
+                stopServo();
+            }
+        }
+        return null;
+    }
+    public Command launch(double servoMotor){
+        // untested
+        time.reset();
+        while (time.seconds() < 3){
+            startLaunch();
+            if (time.seconds() > 2){
+                startPassServo();
+            }
+            if (time.seconds() > 2.25){
+                stopLaunch();
+                stopPassServo();
+            }
+            if (time.seconds() > 2.6){
+                startPassServo();
+            }
+            if (time.seconds() > 2.8){
+                stopLaunch();
+                stopPassServo();
+            }
+        }
+        return null;
+    }
+    public void startServo() {intakeServo.setPower(1);}
+    public void stopServo() {intakeServo.setPower(0);}
+    public void startPassServo(){
+        startPass();
+        startServo();
+    }
+    public void stopPassServo(){
+        stopPass();
+        stopServo();
+    }
+    public double getVe(){
+        return lancherMotor.getVelocity();
+    }
 }
