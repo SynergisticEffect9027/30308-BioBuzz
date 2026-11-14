@@ -4,8 +4,10 @@ import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.waitUntil;
+import static com.pedropathing.ivy.groups.Groups.deadline;
 import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -22,7 +24,7 @@ import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
 @Autonomous(name="RedLaunchDown")
-public class launchParkDown extends OpMode {
+public class launchParkDownA extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
 
@@ -33,28 +35,28 @@ public class launchParkDown extends OpMode {
     Webcam cam = new Webcam();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
-    private final Pose launch = p.of(60.00, 25.00, 0);
-    private final Pose park = p.of(10.00, 98.16, 0);
-    private final Pose controlPose = p.of(13.133723935895226, 42.447010167154914, 0); //for curve
-
-    private Path launchPath() {
-        return line(startPose, launch).linear(startPose, launch);
-    }
+    private final Pose startPose = p.of(62, 135, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose park = p.of(11, 124, 0);
+    private final Pose controlPose = p.of(63, 107, 0); //for curve
 
     private Path parkPath() {
-        return curve(launch, controlPose, park).linear(launch, park);
+        return curve(startPose, controlPose, park).linear(startPose, park);
     }
 
     private Command autoRoutine() {
         return parallel(
                 cam.updateloop,
                 sequential(
-                        waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
-                        top.launch
-                )  // untested
+                        sequential(
+                                waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
+                                top.launch
+                        ).until(() -> time.seconds() > 20),
+                        follow(follower, parkPath())
+                )
+
+                // untested
                 // Add mechanism commands here.
-//                follow(follower, parkPath())
+
                 //follow(follower, parkPathFromStart();
                 // follow(follower, launchPath()), //goes forward, then launch
         );
