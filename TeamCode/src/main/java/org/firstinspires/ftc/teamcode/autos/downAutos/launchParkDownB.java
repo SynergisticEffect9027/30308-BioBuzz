@@ -1,13 +1,11 @@
-package org.firstinspires.ftc.teamcode.downAutos;
+package org.firstinspires.ftc.teamcode.autos.downAutos;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.waitUntil;
-import static com.pedropathing.ivy.groups.Groups.deadline;
 import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
-import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -23,8 +21,8 @@ import org.firstinspires.ftc.teamcode.subClasses.Constants;
 import org.firstinspires.ftc.teamcode.subClasses.Webcam;
 import org.firstinspires.ftc.teamcode.subClasses.topBot;
 
-@Autonomous(name="RedLaunchDown")
-public class launchParkDownA extends OpMode {
+@Autonomous(name="blueLaunchDown")
+public class launchParkDownB extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     private Follower follower;
 
@@ -47,16 +45,11 @@ public class launchParkDownA extends OpMode {
         return parallel(
                 cam.updateloop,
                 sequential(
-                        sequential(
-                                waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
-                                top.launch
-                        ).until(() -> time.seconds() > 20),
-                        follow(follower, parkPath())
-                )
-
-                // untested
+                        waitUntil(()->cam.data() != null && cam.data().startsWith("BLUE")),
+                        top.launch
+                )  // untested
                 // Add mechanism commands here.
-
+//                follow(follower, parkPath())
                 //follow(follower, parkPathFromStart();
                 // follow(follower, launchPath()), //goes forward, then launch
         );

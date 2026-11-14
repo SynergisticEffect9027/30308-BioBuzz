@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.avaAutos;
+package org.firstinspires.ftc.teamcode.autos.avaAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
