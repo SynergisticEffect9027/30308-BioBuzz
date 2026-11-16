@@ -23,7 +23,7 @@ public class Constants {
         c.frontRightName.set("frontRightDrive");
         c.backLeftName.set("backLeftDrive");
         c.backRightName.set("backRightDrive");
-        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.frontLeftDirection.set(DcMotorSimple.Direction.FORWARD);
         c.frontRightDirection.set(DcMotorSimple.Direction.REVERSE);
         c.backLeftDirection.set(DcMotorSimple.Direction.FORWARD);
         c.backRightDirection.set(DcMotorSimple.Direction.REVERSE);
@@ -31,43 +31,44 @@ public class Constants {
     });
     public static OTOSConfig localizerConfig = new OTOSConfig(c -> {
         c.name.set("otos");
-        c.linearScalar.set(28.741543597122302);
-        c.angularScalar.set(0.9302338785341762);
+        c.linearScalar.set(49.938432);
+        c.angularScalar.set(1.600000000000001);
         c.offset.set(new Pose(-8, 4, Math.PI/2));
         c.linearUnit.set(DistanceUnit.INCH);
     });
 
     public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
-                Controller primaryTranslationalForward = Controller.proportional(0.19758010681243754);
-                Controller secondaryTranslationalForward = Controller.proportional(0.07300057002950885);
-                Controller primaryTranslationalLateral = Controller.proportional(0.37396789633016947);
-                Controller secondaryTranslationalLateral = Controller.proportional(0.13817114508777123);
+                Controller primaryTranslationalForward = Controller.proportional(0.1988460697776478);
+                Controller secondaryTranslationalForward = Controller.proportional(0.07346830951800062);
+                Controller primaryTranslationalLateral = Controller.proportional(0.32667271310444923);
+                Controller secondaryTranslationalLateral = Controller.proportional(0.1206968386364382);
 
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
-                c.coast.set(Controller.proportionalFeedforward(0.020428350483748168));
-                c.brake.set(Controller.proportionalFeedforward(0.01736409791118594));
+                c.coast.set(Controller.proportionalFeedforward(0.03316924611723104));
+                c.brake.set(Controller.proportionalFeedforward(0.02819385919964638));
 
-                c.headingFeedback.set(Controller.proportional(3.1246547013007135));
-                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.2607277555506169, -0.05588216891260627));
+                c.headingFeedback.set(Controller.proportional(2.7340961829075296));
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.20129812842921177, -0.03109708240087236));
 
-                c.linearBrakeCoefficients.set(Matrix.diag(0.07929816515178256, 0.04212098247707868));
-                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0012290872243569315, 0.0010003363059485986));
+                c.linearBrakeCoefficients.set(Matrix.diag(0.12369530813177111, 0.15716710108775614));
+                c.quadraticBrakeCoefficients.set(Matrix.diag(-5.849740719023716E-4, -5.648553621324377E-4));
 
-                c.maxAchievableForwardVelocity.set(58.41754008191176);
-                c.maxAchievableStrafeVelocity.set(46.87264277089071);
-                c.naturalForwardDeceleration.set(44.53839864327805);
-                c.naturalStrafeDeceleration.set(81.20459722181991);
+                c.maxAchievableForwardVelocity.set(53.69203079438902);
+                c.maxAchievableStrafeVelocity.set(33.84417725102152);
+                c.naturalForwardDeceleration.set(56.867833686451675);
+                c.naturalStrafeDeceleration.set(97.42576243581563);
             }
     );
     public static Follower create(HardwareMap h) {
-        // return new Follower(Drivetrain, Localizer, Foresight)
+//         return new Follower(Drivetrain, Localizer, Foresight)
         return new Follower(
                  new OTOSLocalizer(h,localizerConfig),
                 new Mecanum(h,drivetrainConfig),
                 new Foresight(foresightConfig)
         );
+//        return null;
     }
 }
