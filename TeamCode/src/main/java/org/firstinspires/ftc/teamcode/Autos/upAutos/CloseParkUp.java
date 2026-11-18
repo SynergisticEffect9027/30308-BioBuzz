@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.upAutos;
+package org.firstinspires.ftc.teamcode.Autos.upAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -19,7 +19,7 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 //Park only, when in front of up hive, lines to park
 @Autonomous
-public class LineParkUp extends OpMode {
+public class CloseParkUp extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     //Will this also work on Blue since they're flipped???
     private Follower follower;
@@ -28,17 +28,14 @@ public class LineParkUp extends OpMode {
     ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
-    private final Pose firstLine = p.of(33, 33, 0);
-    private final Pose park = p.of(10.00, 99, 0);
+    private final Pose startPose = p.of(127, 9, 0);//one tile away from the flower, right next to the goal
+    private final Pose park = p.of(132.00, 33, 0);
 
 
-    private Path FirstLine(){return line(startPose, firstLine).constant(0);}
-    private Path Park(){return line(firstLine, park).constant(0);}
+    private Path Park(){return line(startPose, park).constant(0);}
 
     private Command autoRoutine() {
         return sequential(
-                follow(follower, FirstLine()),
                 follow(follower, Park())
         );
     }

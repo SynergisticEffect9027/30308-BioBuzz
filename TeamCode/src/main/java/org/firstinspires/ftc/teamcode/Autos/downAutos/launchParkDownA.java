@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.downAutos;
+package org.firstinspires.ftc.teamcode.Autos.downAutos;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
