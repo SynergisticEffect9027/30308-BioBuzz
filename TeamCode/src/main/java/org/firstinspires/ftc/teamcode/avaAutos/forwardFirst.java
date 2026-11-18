@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autos.avaAutos;
+package org.firstinspires.ftc.teamcode.avaAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -10,6 +10,7 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import static com.pedropathing.api.Paths.*;
 import com.pedropathing.paths.Path;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
@@ -20,19 +21,21 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 
 @Autonomous
 @Disabled
-public class onlyDriveSecond extends OpMode {
+public class forwardFirst extends OpMode {
     //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
     //Will this also work on Blue since they're flipped???
     private Follower follower;
 
     topBot top = new topBot();
+    ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(64, 134.80, 0);//three tiles away from blue line
-    private final Pose park = p.of(10.00, 112.00, 0);
+    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose park = p.of(56.35, 20, 0);
 
+    private final Pose controlPoseFromStart = p.of(23, 33, 0);
 
-    private Path parkPathFromStart(){return line(startPose, park);}
+    private Path parkPathFromStart(){return line(startPose, park).linear(startPose, park);}
 
     private Command autoRoutine() {
         return sequential(
@@ -60,6 +63,7 @@ public class onlyDriveSecond extends OpMode {
         follower.update();
         Scheduler.execute();
     }
+
 }
 
 //Things ava needs to do:
