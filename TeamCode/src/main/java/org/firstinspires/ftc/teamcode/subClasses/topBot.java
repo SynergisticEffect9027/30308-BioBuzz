@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+import static com.pedropathing.ivy.groups.Groups.sequential;
+
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -68,24 +71,6 @@ public class topBot {
         passMotor.setPower(0);
     }
 
-    public Command launch = Command.build()
-            .setStart(() ->{
-                time.reset();
-                while (time.seconds() < 3){
-                    lancherMotor.setVelocity(1000);
-                    if (time.seconds() > 2){
-                        passMotor.setPower(1);
-                        intakeServo.setPower(1);
-                    }
-                    if (time.seconds() > 2.25){
-                        passMotor.setPower(0);
-                        intakeServo.setPower(0);
-                        lancherMotor.setVelocity(0);
-                    }
-                }
-                x = true;
-            })
-            .setDone(() -> x);
     public Command launch(boolean motor){
         // untested
         time.reset();
@@ -151,4 +136,26 @@ public class topBot {
     public double getVe(){
         return lancherMotor.getVelocity();
     }
+
+    public Command shoot = Command.build()
+            .setStart(() -> {lancherMotor.setVelocity(1000);});
+    public Command pass = Command.build()
+            .setStart(() -> {
+                passMotor.setPower(1);
+                intakeServo.setPower(1);
+            });
+    public Command stop = Command.build()
+            .setStart(() -> {
+                passMotor.setPower(0);
+                intakeServo.setPower(0);
+                lancherMotor.setVelocity(0);
+            });
+
+    public Command launch = sequential(
+            shoot,
+            waitMs(2000),
+            pass,
+            waitMs(3000),
+            stop
+    );
 }
