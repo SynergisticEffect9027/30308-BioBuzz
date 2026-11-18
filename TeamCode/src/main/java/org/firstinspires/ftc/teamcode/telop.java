@@ -83,14 +83,14 @@ public class telop extends OpMode {
 
             }
         }
-        if (gamepad2.dpad_up){
-            top.launch(true); //just pass
-        }
-        if (gamepad2.dpad_down){
-            top.launch(1); //just servo
-        }
+//        if (gamepad2.dpad_up){
+//            top.launch(true); //just pass
+//        }
+//        if (gamepad2.dpad_down){
+//            top.launch(1); //just servo
+//        }
         if (gamepad2.dpad_right){
-            top.launch(0.5); //servo and motor
+            top.launch(); //servo and motor
         }
         /*
         a: shooter

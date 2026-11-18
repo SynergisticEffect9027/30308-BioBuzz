@@ -53,12 +53,6 @@ public class launchParkDownA extends OpMode {
                         ).until(() -> time.seconds() < 10),
                         follow(follower, parkPath())
                 )
-
-                // untested
-                // Add mechanism commands here.
-
-                //follow(follower, parkPathFromStart();
-                // follow(follower, launchPath()), //goes forward, then launch
         );
     }
 
@@ -85,9 +79,3 @@ public class launchParkDownA extends OpMode {
         telemetry.update();
     }
 }
-
-//Things ava needs to do:
-//Shoot from wall then move: Red1, Red2, Blue1, Blue2
-//Wait then shoot from wall then move: Red1, Red2, Blue1, Blue2
-//Move forward and then shoot: Red1, Red2, Blue1, Blue2
-//Wait, then forward and shoot: Red1, Red2, Blue1, Blue2

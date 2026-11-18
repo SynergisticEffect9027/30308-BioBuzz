@@ -70,38 +70,35 @@ public class topBot {
     public void stopPass(){
         passMotor.setPower(0);
     }
-
-    public Command launch(boolean motor){
-        // untested
-        time.reset();
-        while (time.seconds() < 6){
-            startLaunch();
-            if (time.seconds() > 3){
-                startPass();
-            }
-            if (time.seconds() > 5){
-                stopLaunch();
-                stopPass();
-            }
-        }
-        return null;
-    }
-    public Command launch(int servo){
-        // untested
-        time.reset();
-        while (time.seconds() < 6){
-            startLaunch();
-            if (time.seconds() > 3){
-                startServo();
-            }
-            if (time.seconds() > 5){
-                stopLaunch();
-                stopServo();
-            }
-        }
-        return null;
-    }
-    public Command launch(double servoMotor){
+//    public void launch(boolean motor){
+//        // untested
+//        time.reset();
+//        while (time.seconds() < 6){
+//            startLaunch();
+//            if (time.seconds() > 3){
+//                startPass();
+//            }
+//            if (time.seconds() > 5){
+//                stopLaunch();
+//                stopPass();
+//            }
+//        }
+//    }
+//    public void launch(int servo){
+//        // untested
+//        time.reset();
+//        while (time.seconds() < 6){
+//            startLaunch();
+//            if (time.seconds() > 3){
+//                startServo();
+//            }
+//            if (time.seconds() > 5){
+//                stopLaunch();
+//                stopServo();
+//            }
+//        }
+//    }
+    public void launch(){
         // untested
         time.reset();
         while (time.seconds() < 3){
@@ -121,7 +118,6 @@ public class topBot {
                 stopPassServo();
             }
         }
-        return null;
     }
     public void startServo() {intakeServo.setPower(1);}
     public void stopServo() {intakeServo.setPower(0);}
@@ -155,7 +151,7 @@ public class topBot {
             shoot,
             waitMs(2000),
             pass,
-            waitMs(3000),
+            waitMs(2300),
             stop
     );
 }
