@@ -1,0 +1,81 @@
+package org.firstinspires.ftc.teamcode.autos.downAutos;
+
+import static com.pedropathing.api.Paths.curve;
+import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.commands.Commands.waitUntil;
+import static com.pedropathing.ivy.groups.Groups.deadline;
+import static com.pedropathing.ivy.groups.Groups.parallel;
+import static com.pedropathing.ivy.groups.Groups.sequential;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+
+import com.pedropathing.api.PoseFactory;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
+import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.subClasses.Constants;
+import org.firstinspires.ftc.teamcode.subClasses.Webcam;
+import org.firstinspires.ftc.teamcode.subClasses.topBot;
+
+@Autonomous(name="RedLaunchDown")
+public class launchParkDownA extends OpMode {
+    //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
+    private Follower follower;
+
+    private ElapsedTime time = new ElapsedTime();
+
+    topBot top = new topBot();
+
+    Webcam cam = new Webcam();
+    private final PoseFactory p = PoseFactory.degrees();
+    //plug poses into https://live.turtletracer.com/ to visalize path
+    private final Pose startPose = p.of(62, 135, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose park = p.of(11, 124, 0);
+    private final Pose controlPose = p.of(63, 107, 0); //for curve
+
+    private Path parkPath() {
+        return curve(startPose, controlPose, park).linear(startPose, park);
+    }
+
+    private Command autoRoutine() {
+        return parallel(
+                cam.updateloop,
+                sequential(
+                        sequential(
+                                waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
+                                top.launch
+                        ),//.until(() -> time.seconds() < 10),
+                        follow(follower, parkPath())
+                )
+        );
+    }
+
+    @Override
+    public void init() {
+        Scheduler.reset();
+        follower = Constants.create(hardwareMap);
+        top.init(hardwareMap);
+        cam.init(hardwareMap, telemetry);
+        follower.setPose(startPose);
+        follower.update();
+    }
+
+    @Override
+    public void start() {
+        schedule(autoRoutine());
+    }
+
+    @Override
+    public void loop() {
+        follower.update();
+        Scheduler.execute();
+        telemetry.addData("hi", cam.data());
+        telemetry.update();
+    }
+}
