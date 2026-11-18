@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autos.avaAutos;
+package org.firstinspires.ftc.teamcode.avaAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -10,49 +10,49 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import static com.pedropathing.api.Paths.*;
 import com.pedropathing.paths.Path;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.commands.Commands.instant;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
+import static com.pedropathing.ivy.commands.Commands.waitUntil;
+import static com.pedropathing.ivy.groups.Groups.parallel;
+import static com.pedropathing.ivy.groups.Groups.race;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
 
 @Autonomous
 @Disabled
-public class launchSecond extends OpMode {
-    //Goes from starting on the higher hive on the red side, forward to shoot, then to the side, and then up to get to parking
-    //Will this also work on Blue since they're flipped???
+public class launchFirstGrab extends OpMode {
+    //Goes from starting on the higher hive on the red side, shoots, then moves to the garden to collect pollen
     private Follower follower;
 
     topBot top = new topBot();
     ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(64.00, 134.80, 0);//three tiles away from blue garden. On the line connecting the second and third tile. facing red goal
-    private final Pose launch = p.of(60.00, 119.00, 0);
-    private final Pose park = p.of(10.00, 112.00, 0);
+    private final Pose startPose = p.of(56.35, 9.05, 0);//two tiles away from red garden. On the line connecting the second and third tile. facing red goal
+    private final Pose garden = p.of(10, 9.05, 0);
 
+    private final Pose controlPoseFromStart = p.of(23, 33, 0);
 
-    private Path launchPath() {
-        return line(startPose, launch).linear(startPose, launch);
+    private Path garden() {
+        return line(startPose, garden).linear(startPose, garden);
     }
-
-    private Path parkPath() {
-        return line(launch, park).linear(launch, park);
-    }
-    private Path parkPathFromStart(){return line(startPose, park).linear(startPose, park);}
-
     private Command autoRoutine() {
         return sequential(
-               // follow(follower, launchPath()), //goes forward, then launch
-                launchYay,  // untested
-                // Add mechanism commands here.
-                //follow(follower, parkPath())
-                follow(follower, parkPathFromStart())
-        );
+                launchYay,
+                sequential(
+                        parallel(
+                                follow(follower, garden()),
+                                waitMs(1000),
+                                intake
+                        )
+
+        ));
     }
 
     @Override
@@ -73,28 +73,32 @@ public class launchSecond extends OpMode {
     @Override
     public void loop() {
         follower.update();
-        Pose robotPose = follower.pose(); // returns a Pose object
-        telemetry.addData("Robot X", robotPose.x());
-        telemetry.addData("Robot Y", robotPose.y());
-        telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
         Scheduler.execute();
     }
 
     Command launchYay = Command.build()
             .setExecute(() -> {
                 time.reset();
-                while (time.seconds() < 15) {
-                    while (time.seconds() < 12 && time.seconds() > 6) {
-                        top.startLaunch();
-                        if (time.seconds() > 9) {
-                            top.startPass();
-                        }
+                while (time.seconds() < 6){
+                    top.startLaunch();
+                    if (time.seconds() > 3){
+                        top.startPass();
                     }
                 }
             })
-            .setDone(() -> time.seconds() > 12)
+            .setDone(() -> time.seconds() > 6)
             .setEnd(endCondition -> top.stopPass())
             .requiring(top.passMotor);
+    Command intake = Command.build()
+            .setExecute(() -> {
+                time.reset();
+                while (time.seconds() < 6){
+                    top.startIntake();
+                }
+            })
+            .setDone(() -> time.seconds() > 6)
+            .setEnd(endCondition -> top.stopIntake())
+            .requiring(top.intakeMotor);
 }
 
 //Things ava needs to do:

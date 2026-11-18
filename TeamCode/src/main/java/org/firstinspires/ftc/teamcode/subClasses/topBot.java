@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
-import static com.pedropathing.ivy.commands.Commands.instant;
-import static com.pedropathing.ivy.commands.Commands.waitMs;
-import static com.pedropathing.ivy.groups.Groups.sequential;
-
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.behaviors.BlockedBehavior;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -22,8 +18,6 @@ public class topBot {
     public DcMotor  intakeMotor;
     public DcMotor  passMotor;
     public DcMotorEx lancherMotor;
-
-    public boolean x = false;
     public CRServo intakeServo;
     public void init(HardwareMap hwMap) {
 
@@ -71,35 +65,43 @@ public class topBot {
     public void stopPass(){
         passMotor.setPower(0);
     }
-//    public void launch(boolean motor){
-//        // untested
-//        time.reset();
-//        while (time.seconds() < 6){
-//            startLaunch();
-//            if (time.seconds() > 3){
-//                startPass();
-//            }
-//            if (time.seconds() > 5){
-//                stopLaunch();
-//                stopPass();
-//            }
-//        }
-//    }
-//    public void launch(int servo){
-//        // untested
-//        time.reset();
-//        while (time.seconds() < 6){
-//            startLaunch();
-//            if (time.seconds() > 3){
-//                startServo();
-//            }
-//            if (time.seconds() > 5){
-//                stopLaunch();
-//                stopServo();
-//            }
-//        }
-//    }
-    public void launch(){
+    public Command launch = Command.build()
+            .setStart(() ->{
+        // untested
+         lancherMotor.setVelocity(1000);
+    }
+    );
+    public Command launch(boolean motor){
+        // untested
+        time.reset();
+        while (time.seconds() < 6){
+            startLaunch();
+            if (time.seconds() > 3){
+                startPass();
+            }
+            if (time.seconds() > 5){
+                stopLaunch();
+                stopPass();
+            }
+        }
+        return null;
+    }
+    public Command launch(int servo){
+        // untested
+        time.reset();
+        while (time.seconds() < 6){
+            startLaunch();
+            if (time.seconds() > 3){
+                startServo();
+            }
+            if (time.seconds() > 5){
+                stopLaunch();
+                stopServo();
+            }
+        }
+        return null;
+    }
+    public Command launch(double servoMotor){
         // untested
         time.reset();
         while (time.seconds() < 3){
@@ -119,6 +121,7 @@ public class topBot {
                 stopPassServo();
             }
         }
+        return null;
     }
     public void startServo() {intakeServo.setPower(1);}
     public void stopServo() {intakeServo.setPower(0);}
@@ -133,30 +136,4 @@ public class topBot {
     public double getVe(){
         return lancherMotor.getVelocity();
     }
-
-    public Command shoot = Command.build()
-            .setStart(() -> {
-                lancherMotor.setVelocity(1000);})
-            .setDone(() -> true);
-    public Command pass = Command.build()
-            .setStart(() -> {
-                passMotor.setPower(1);
-                intakeServo.setPower(1);
-            })
-            .setDone(() -> true);
-    public Command stop = Command.build()
-            .setStart(() -> {
-                passMotor.setPower(0);
-                intakeServo.setPower(0);
-                lancherMotor.setVelocity(0);
-            })
-            .setDone(() -> true);
-
-    public Command launch = sequential(
-            shoot,
-            waitMs(2000),
-            pass,
-            waitMs(2300),
-            stop
-    );
 }
