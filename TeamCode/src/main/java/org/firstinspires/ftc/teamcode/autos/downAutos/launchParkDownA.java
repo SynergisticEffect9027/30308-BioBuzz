@@ -50,7 +50,7 @@ public class launchParkDownA extends OpMode {
                         sequential(
                                 waitUntil(()->cam.data() != null && cam.data().startsWith("RED")),
                                 top.launch
-                        ).until(() -> time.seconds() < 10),
+                        ),//.until(() -> time.seconds() < 10),
                         follow(follower, parkPath())
                 )
         );

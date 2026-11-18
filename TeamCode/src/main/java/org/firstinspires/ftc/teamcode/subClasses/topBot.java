@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subClasses;
 
+import static com.pedropathing.ivy.commands.Commands.instant;
 import static com.pedropathing.ivy.commands.Commands.waitMs;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 
@@ -134,18 +135,22 @@ public class topBot {
     }
 
     public Command shoot = Command.build()
-            .setStart(() -> {lancherMotor.setVelocity(1000);});
+            .setStart(() -> {
+                lancherMotor.setVelocity(1000);})
+            .setDone(() -> true);
     public Command pass = Command.build()
             .setStart(() -> {
                 passMotor.setPower(1);
                 intakeServo.setPower(1);
-            });
+            })
+            .setDone(() -> true);
     public Command stop = Command.build()
             .setStart(() -> {
                 passMotor.setPower(0);
                 intakeServo.setPower(0);
                 lancherMotor.setVelocity(0);
-            });
+            })
+            .setDone(() -> true);
 
     public Command launch = sequential(
             shoot,
