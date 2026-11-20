@@ -28,8 +28,8 @@ public class CloseParkUp extends OpMode {
     ElapsedTime time = new ElapsedTime();
     private final PoseFactory p = PoseFactory.degrees();
     //plug poses into https://live.turtletracer.com/ to visalize path
-    private final Pose startPose = p.of(127, 9, Math.toRadians(90));//one tile away from the flower, right next to the goal
-    private final Pose park = p.of(132.00, 33, Math.toRadians(90));
+    private final Pose startPose = p.of(9, 127, Math.toRadians(0));//one tile away from the flower, right next to the goal
+    private final Pose park = p.of(33, 132, Math.toRadians(0));
 
 
     private Path Park(){return line(startPose, park).constant(Math.toRadians(0));}
